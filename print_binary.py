@@ -14,14 +14,17 @@ if not is_flac(f):
     print("not flac")
     sys.exit()
 
+print()
+
 # metadata block
-result = read_mdb(f)
+for i in range(3):
+    result_dict = read_mdb(f)
 
-if result[0]:
-    print("last metadata block")
-else:
-    print("Not last metadata block")
+    print("block type:", mdb_type[result_dict['block_type']])
+    print(result_dict)
+    if result_dict['last_mdb_flag']:
+        print("\nLAST metadata block")
 
-print("block type: ", result[1])
+    print("\n*****\n")
 
-print_nbyte(f, result[2])
+print((f.read(4)).hex())
